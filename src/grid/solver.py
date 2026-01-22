@@ -91,6 +91,52 @@ def solve_naked_pairs(group: np.ndarray):
                         if k != i and k != j:
                             group[k] &= mask
 
+def solve_phistomephel_ring(grid: np.ndarray):
+    # if grid.shape != (9, 9):
+    #     return # Only applies to 9x9
+        
+    # # 1. Define the coordinates
+    # # Outer 16: The four 2x2 corner blocks
+    # outer_coords = [
+    #     (0,0), (0,1), (1,0), (1,1), # Top-Left
+    #     (0,7), (0,8), (1,7), (1,8), # Top-Right
+    #     (7,0), (7,1), (8,0), (8,1), # Bottom-Left
+    #     (7,7), (7,8), (8,7), (8,8)  # Bottom-Right
+    # ]
+    
+    # # Inner 16: The ring surrounding the very center
+    # # Rows 2 and 6 (cols 2-6), and Cols 2 and 6 (rows 2-6)
+    # inner_coords = [
+    #     (2,2), (2,3), (2,4), (2,5), (2,6),
+    #     (6,2), (6,3), (6,4), (6,5), (6,6),
+    #     (3,2), (4,2), (5,2),
+    #     (3,6), (4,6), (5,6)
+    # ]
+    
+    # def get_set_info(coords):
+    #     cells = [grid[r, c] for r, c in coords]
+    #     fixed = [c for c in cells if bin(c).count('1') == 1]
+    #     return cells, fixed
+
+    # outer_cells, outer_fixed = get_set_info(outer_coords)
+    # inner_cells, inner_fixed = get_set_info(inner_coords)
+
+    # # 2. Logic: If the total count of a digit is known in one ring, 
+    # # it must match in the other.
+    # for i in range(9):
+    #     bit = 1 << i
+    #     count_outer = outer_fixed.count(bit)
+    #     count_inner = inner_fixed.count(bit)
+        
+    #     # If we found all instances of a digit in the outer ring (e.g., two 5s),
+    #     # and the inner ring already has two 5s, remove 5 from all other inner candidates.
+    #     # Note: This requires knowing the total count, which is usually found
+    #     # by checking how many cells in the ring *could* still be that bit.
+        
+    #     # Simple version: if count is equal and maxed out, eliminate
+    #     # (This is a complex set-theory deduction, often used in 'Set Equivalent Theory')
+    pass
+
 
 def solve_grid(grid):
     """Solves the Sudoku grid using a combination of techniques."""
