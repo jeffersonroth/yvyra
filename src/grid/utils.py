@@ -19,6 +19,13 @@ def row_major_to_grid(row_major: str, grid_type: Tuple[int, int]) -> np.ndarray:
     return grid
 
 
+def grid_to_row_major(grid: np.ndarray) -> str:
+    """
+    Convert a 2D grid to a row-major string.
+    """
+    return "".join(str(cell) for row in grid for cell in row)
+
+
 def char_grid_to_solver_grid(char_grid: np.ndarray, symbols: Symbols) -> np.ndarray:
     """
     Convert a character grid (2D array of symbols) to a integer grid used by the solver.
@@ -40,6 +47,25 @@ def char_grid_to_solver_grid(char_grid: np.ndarray, symbols: Symbols) -> np.ndar
         for j in range(char_grid.shape[1]):
             int_grid[i, j] = symbols_map.get(char_grid[i, j], 0)
     return int_grid
+
+
+def solver_grid_to_char_grid(solver_grid: np.ndarray, symbols: Symbols) -> np.ndarray:
+    """
+    Convert a solver grid (2D array of integers) back to a character grid.
+
+    This is the inverse of char_grid_to_solver_grid.
+    """
+    unknown = get_unknown_symbol(symbols)  # This is "?"
+    possibles = get_possible_symbols(symbols)  # These are ["0", ..., "F"]
+
+    symbols_map = {1 << i: ch for i, ch in enumerate(possibles)}
+    symbols_map[0] = unknown
+
+    char_grid = np.empty(solver_grid.shape, dtype=str)
+    for i in range(solver_grid.shape[0]):
+        for j in range(solver_grid.shape[1]):
+            char_grid[i, j] = symbols_map.get(solver_grid[i, j], unknown)
+    return char_grid
 
 
 if __name__ == "__main__":
