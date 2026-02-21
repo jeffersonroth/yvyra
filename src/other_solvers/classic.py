@@ -1,4 +1,4 @@
-"""Grid."""
+"""Classic Solver."""
 
 import numpy as np
 
